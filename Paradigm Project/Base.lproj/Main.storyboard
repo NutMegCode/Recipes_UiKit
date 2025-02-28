@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Recipe View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Paradigm_Project" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="RecipeViewController" customModule="Paradigm_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -65,12 +65,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fMo-wd-dvi">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fMo-wd-dvi">
                                         <rect key="frame" x="20" y="173.33333333333331" width="353" height="120"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="120" id="Wep-cb-duF"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="hv6-eu-YeM"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="7oB-s5-fF2"/>
+                                        </connections>
                                     </tableView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Method" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hR7-JV-9m8">
                                         <rect key="frame" x="20" y="313.33333333333331" width="353" height="21"/>
@@ -130,7 +134,10 @@
                     </view>
                     <connections>
                         <outlet property="descriptionLabel" destination="4fr-VF-Nfa" id="VwS-Yv-bwp"/>
+                        <outlet property="ingredientTableHeight" destination="Wep-cb-duF" id="pTb-f3-9n3"/>
+                        <outlet property="ingredientsTable" destination="fMo-wd-dvi" id="kNg-DP-HXb"/>
                         <outlet property="methodLabel" destination="AhN-L6-4Qh" id="IXS-al-KfN"/>
+                        <outlet property="servesField" destination="ma2-P3-FNT" id="9o7-gF-bYt"/>
                         <outlet property="titleLabel" destination="B7y-p5-kdq" id="2ad-Ub-3aa"/>
                     </connections>
                 </viewController>
