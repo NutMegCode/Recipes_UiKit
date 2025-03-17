@@ -19,10 +19,10 @@ class IngredientCell: UITableViewCell {
         // Initialization code
     }
     
-    func setIngredient(qty: Float, uom: String, title: String){
-        qtyLabel.text = "\(Int(qty))"
-        uomLabel.text = uom
-        titleLabel.text = title
+    func setIngredient(ingredient: Ingredient){
+        qtyLabel.text = "\(ingredient.quantity ?? 0)"
+        uomLabel.text = ingredient.uom
+        titleLabel.text = ingredient.name
     }
 
 

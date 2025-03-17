@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "RecipeViewController.viewDidLoad():RecipeViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "RecipeViewController.refreshButtonPushed(_:):RecipeViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "RecipeViewController.favouriteButtonPressed(_:):RecipeViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "isFavourite">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

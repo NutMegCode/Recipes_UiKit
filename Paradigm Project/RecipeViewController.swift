@@ -16,14 +16,26 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var ingredientsTable: UITableView!
     @IBOutlet weak var methodLabel: UILabel!
     
+    @IBOutlet weak var favouriteImage: UIImageView!
+    
+    
     @IBOutlet weak var ingredientTableHeight: NSLayoutConstraint!
+    
+    var recipe: Recipe? = nil
+    
+    var isFavourite = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = "Spag Bol"
-        descriptionLabel.text = "A classic Italian dish"
-        methodLabel.text = "1. Boil water. \n2. Add pasta. \n3. Add sauce. \n4. Cook pasta."
+        titleLabel.text = recipe?.name ?? "-"
+        descriptionLabel.text = recipe?.description ?? "-"
+        methodLabel.text = recipe?.method ?? "-"
+        servesField.text = "\(recipe?.serves ?? 0)"
+        
+        isFavourite = recipe?.favourites?.favoiurites.contains(where: { $0.name == recipe?.name }) ?? false
+        
+        favouriteImage.image = isFavourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
         setupTable()
         
@@ -40,6 +52,53 @@ class RecipeViewController: UIViewController {
         ingredientTableHeight.constant = 50
         
     }
+    
+    @IBAction func recalculateAsFloat(_ sender: Any) {
+        
+        if let ingredientsList = recipe?.ingredients,
+           let serves = Double(servesField.text ?? "0"){
+            
+            for ingredient in ingredientsList {
+                if let quantityPerOneServe = ingredient?.quantityPerOneServe {
+                    ingredient?.quantity = quantityPerOneServe * serves
+                }
+            }
+        }
+        
+        ingredientsTable.reloadData()
+    }
+    
+    @IBAction func recalculateAsFDouble(_ sender: Any) {
+        
+        if let ingredientsList = recipe?.ingredients,
+           let serves = Float(servesField.text ?? "0"){
+            
+            for ingredient in ingredientsList {
+                if let quantityPerOneServe = ingredient?.quantityPerOneServe {
+                    ingredient?.quantity = Double(Float(quantityPerOneServe) * serves)
+                }
+
+            }
+            
+                
+        }
+        
+        ingredientsTable.reloadData()
+    }
+    
+    
+    @IBAction func favouriteButtonPressed(_ sender: Any) {
+        if let recipe = recipe {
+            recipe.favourites?.favoiurites.append(recipe)
+            
+            isFavourite = recipe.favourites?.favoiurites.contains(where: { $0.name == recipe.name }) ?? false
+            
+            favouriteImage.image = isFavourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+
+        }
+        
+    }
+    
 }
 
 extension RecipeViewController: UITextFieldDelegate {
@@ -55,20 +114,31 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return recipe?.ingredients.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: jobCellIdentifier, for: indexPath) as? IngredientCell
         
-        if  let cell{
-            cell.setIngredient(qty: 500, uom: "grams", title: "Mince")
+        let ingredients = recipe?.ingredients
+        
+        if  let cell,
+            let ingredients,
+            ingredients.count > indexPath.row {
+            
+            if let ingredient = ingredients[indexPath.row]{
+                
+                cell.setIngredient(ingredient: ingredient)
+            } else {
+                debugPrint("Error: with the ingredient Cell")
+                return UITableViewCell()
+            }
                         
             return cell
             
         } else {
-            debugPrint("Error: with the job Cell")
+            debugPrint("Error: with the ingredient Cell")
             return UITableViewCell()
         }
 
@@ -82,15 +152,13 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
     
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        
-//        let serviceJobs = viewModel.output.serviceJobs.value
-//        
-//        if let serviceJobs,
-//           serviceJobs.count > indexPath.row,
-//           let serviceJobID = serviceJobs[indexPath.row].serviceJobID {
-//            
-//            JobDetailCoordinator.start(serviceJobID: serviceJobID,
-//                                       bookingID: nil,
-//                                       dataRepo: viewModel.dataRepo)
+//        let things = viewModel.output.things.value
+//
+//        if let things,
+//           things.count > indexPath.row,
+//           let thing = serviceJobs[indexPath.row].thing {
+//
+//            myCoordinator.start(thing: thing)
 //
 //        }
 //

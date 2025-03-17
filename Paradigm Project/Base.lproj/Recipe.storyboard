@@ -30,6 +30,14 @@
                                     <constraint firstAttribute="height" constant="60" id="n6j-TH-rve"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTl-jl-xWJ">
+                                <rect key="frame" x="288" y="79" width="60" height="60"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="favouriteButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ax2-pd-3nU"/>
+                                </connections>
+                            </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Yb-wJ-icM">
                                 <rect key="frame" x="0.0" y="116.66666666666669" width="393" height="701.33333333333326"/>
                                 <subviews>
@@ -59,6 +67,22 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtt-4u-h3D">
+                                        <rect key="frame" x="168.66666666666666" y="84.666666666666671" width="61.666666666666657" height="34.333333333333329"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Float"/>
+                                        <connections>
+                                            <action selector="recalculateAsFloat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Abq-1c-Z4C"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbc-Lc-aWO">
+                                        <rect key="frame" x="242.33333333333337" y="84.333333333333329" width="79" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Double"/>
+                                        <connections>
+                                            <action selector="recalculateAsFDouble:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tD7-cE-G49"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHt-FJ-v1n">
                                         <rect key="frame" x="20" y="132.33333333333331" width="353" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
@@ -90,9 +114,11 @@
                                     </label>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="wbc-Lc-aWO" firstAttribute="centerY" secondItem="jtt-4u-h3D" secondAttribute="centerY" id="3Xh-mq-8pw"/>
                                     <constraint firstItem="4fr-VF-Nfa" firstAttribute="leading" secondItem="MQV-MJ-I8w" secondAttribute="leading" id="3ZJ-cl-iWQ"/>
                                     <constraint firstItem="hR7-JV-9m8" firstAttribute="trailing" secondItem="MQV-MJ-I8w" secondAttribute="trailing" id="BZD-yS-M1t"/>
                                     <constraint firstItem="4fr-VF-Nfa" firstAttribute="top" secondItem="MQV-MJ-I8w" secondAttribute="bottom" constant="20" id="EBU-vv-qxL"/>
+                                    <constraint firstItem="jtt-4u-h3D" firstAttribute="leading" secondItem="ma2-P3-FNT" secondAttribute="trailing" constant="20" id="Geq-vy-7sl"/>
                                     <constraint firstItem="ZSD-RL-TNn" firstAttribute="leading" secondItem="MQV-MJ-I8w" secondAttribute="leading" id="ICt-Yk-hIH"/>
                                     <constraint firstItem="ma2-P3-FNT" firstAttribute="centerY" secondItem="ZSD-RL-TNn" secondAttribute="centerY" id="J7C-pn-hkv"/>
                                     <constraint firstItem="BHt-FJ-v1n" firstAttribute="trailing" secondItem="MQV-MJ-I8w" secondAttribute="trailing" id="Rm9-rF-r4c"/>
@@ -106,9 +132,11 @@
                                     <constraint firstItem="fMo-wd-dvi" firstAttribute="leading" secondItem="BHt-FJ-v1n" secondAttribute="leading" id="hXZ-Xh-aeH"/>
                                     <constraint firstItem="AhN-L6-4Qh" firstAttribute="top" secondItem="hR7-JV-9m8" secondAttribute="bottom" constant="20" id="m7W-dr-Wwa"/>
                                     <constraint firstItem="fMo-wd-dvi" firstAttribute="top" secondItem="BHt-FJ-v1n" secondAttribute="bottom" constant="20" id="mx7-3H-gOj"/>
+                                    <constraint firstItem="wbc-Lc-aWO" firstAttribute="leading" secondItem="jtt-4u-h3D" secondAttribute="trailing" constant="12" id="nI2-eH-jDt"/>
                                     <constraint firstItem="BHt-FJ-v1n" firstAttribute="leading" secondItem="MQV-MJ-I8w" secondAttribute="leading" id="nZa-bh-dhN"/>
                                     <constraint firstItem="AhN-L6-4Qh" firstAttribute="leading" secondItem="MQV-MJ-I8w" secondAttribute="leading" id="orY-Uc-7L5"/>
                                     <constraint firstItem="4fr-VF-Nfa" firstAttribute="trailing" secondItem="MQV-MJ-I8w" secondAttribute="trailing" id="qxe-nr-39t"/>
+                                    <constraint firstItem="jtt-4u-h3D" firstAttribute="centerY" secondItem="ma2-P3-FNT" secondAttribute="centerY" id="rbs-gP-Rc4"/>
                                     <constraint firstItem="MQV-MJ-I8w" firstAttribute="top" secondItem="4Yb-wJ-icM" secondAttribute="top" constant="10" id="tV8-hK-h1L"/>
                                     <constraint firstAttribute="bottom" secondItem="AhN-L6-4Qh" secondAttribute="bottom" constant="20" id="tXR-e4-0qm"/>
                                     <constraint firstItem="ma2-P3-FNT" firstAttribute="leading" secondItem="ZSD-RL-TNn" secondAttribute="trailing" constant="12" id="wY8-Js-nRa"/>
@@ -121,19 +149,24 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="QTl-jl-xWJ" firstAttribute="top" secondItem="R5R-bi-6zn" secondAttribute="top" id="El0-Q3-T6r"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4Yb-wJ-icM" secondAttribute="bottom" id="FB0-RA-uC8"/>
+                            <constraint firstItem="QTl-jl-xWJ" firstAttribute="trailing" secondItem="R5R-bi-6zn" secondAttribute="trailing" id="IBi-Ey-Lp8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MQV-MJ-I8w" secondAttribute="trailing" constant="20" id="Isp-zp-cOZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="R5R-bi-6zn" secondAttribute="trailing" constant="45" id="K3g-ea-GJf"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="QTZ-kL-0iW"/>
                             <constraint firstItem="4Yb-wJ-icM" firstAttribute="top" secondItem="B7y-p5-kdq" secondAttribute="bottom" constant="10" id="UIQ-uj-IFs"/>
                             <constraint firstItem="4Yb-wJ-icM" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ZWV-91-Xqa"/>
                             <constraint firstItem="R5R-bi-6zn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="aMe-i0-wvm"/>
+                            <constraint firstItem="QTl-jl-xWJ" firstAttribute="leading" secondItem="R5R-bi-6zn" secondAttribute="leading" id="mXc-vN-Ftz"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nsw-eY-a50"/>
                             <constraint firstItem="4Yb-wJ-icM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vjT-Vs-byq"/>
+                            <constraint firstItem="QTl-jl-xWJ" firstAttribute="bottom" secondItem="R5R-bi-6zn" secondAttribute="bottom" id="wxr-B5-Hes"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="descriptionLabel" destination="4fr-VF-Nfa" id="VwS-Yv-bwp"/>
+                        <outlet property="favouriteImage" destination="R5R-bi-6zn" id="GH6-Nv-GcK"/>
                         <outlet property="ingredientTableHeight" destination="Wep-cb-duF" id="pTb-f3-9n3"/>
                         <outlet property="ingredientsTable" destination="fMo-wd-dvi" id="kNg-DP-HXb"/>
                         <outlet property="methodLabel" destination="AhN-L6-4Qh" id="IXS-al-KfN"/>
@@ -143,7 +176,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="130" y="-2"/>
+            <point key="canvasLocation" x="129.00763358778624" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>

@@ -30,6 +30,24 @@ class DashboardViewController: UIViewController {
             fatalError("Navigation controller not found")
         }
         
+
+        let recipe = Recipe()
+        let ingredient = Ingredient()
+        
+        ingredient.name = "Test Ingredient"
+        ingredient.quantity = 1
+        ingredient.uom = "kg"
+        
+        recipe.name = "Test Recipe"
+        recipe.description = "This is a test recipe"
+        recipe.serves = 2
+        ingredient.quantityPerOneServe = ingredient.getQuantityOfOneForServes(recipe.serves)
+        recipe.ingredients = [ingredient]
+        recipe.method = "This is an example method"
+        recipe.favourites = Favourites()
+        
+        secondViewController.recipe = recipe
+        
         // Push or present the second view controller
         navigationController.pushViewController(secondViewController, animated: true)
         
