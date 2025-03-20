@@ -5,60 +5,112 @@
 //  Created by Meg on 17/3/2025.
 //
 
-class Recipe {
-    var name: String? = nil
-    var serves: Double? = nil
-    var description: String? = nil
-    var ingredients: [Ingredient?] = []
-    var method: String? = nil
-    var isFavourite: Bool = false
-    
-    init() {
+import Foundation
+
+class Recipe: Codable {
+    var name: String?
+    var serves: Double?
+    var description: String?
+    var ingredients: [Ingredient?] // Removed optional type inside array
+    var method: String?
+    var isFavourite: Bool
+
+    init(name: String? = nil, serves: Double? = nil, description: String? = nil, ingredients: [Ingredient] = [], method: String? = nil, isFavourite: Bool = false) {
+        self.name = name
+        self.serves = serves
+        self.description = description
+        self.ingredients = ingredients
+        self.method = method
+        self.isFavourite = isFavourite
     }
 }
 
-class Ingredient {
-    var name: String? = nil
-    var quantity: Double? = nil
-    var uom: String? = nil
-    var quantityPerOneServe: Double? = nil
-    
-    func getQuantityOfOneForServes(_ serves: Double?) -> Double {
-        return (quantity ?? 0) / (serves ?? 0) //clarifying brackets are enforced here
+
+class Ingredient: Codable {
+    var name: String?
+    var quantity: Double?
+    var uom: String?
+    var quantityPerOneServe: Decimal?
+
+    init(name: String? = nil, quantity: Double? = nil, uom: String? = nil, quantityPerOneServe: Decimal? = nil) {
+        self.name = name
+        self.quantity = quantity
+        self.uom = uom
+        self.quantityPerOneServe = quantityPerOneServe
     }
     
-    init() {
+    func getQuantityOfOneForServes(_ serves: Decimal?) -> Decimal {
+        return Decimal((quantity ?? 0)) / (serves ?? 1) // Avoid division by zero
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case name, quantity, uom, quantityPerOneServe
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        quantity = try container.decodeIfPresent(Double.self, forKey: .quantity)
+        uom = try container.decodeIfPresent(String.self, forKey: .uom)
+        if let decimalString = try container.decodeIfPresent(String.self, forKey: .quantityPerOneServe) {
+            quantityPerOneServe = Decimal(string: decimalString)
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(quantity, forKey: .quantity)
+        try container.encodeIfPresent(uom, forKey: .uom)
+        if let quantityPerOneServe = quantityPerOneServe {
+            try container.encode("\(quantityPerOneServe)", forKey: .quantityPerOneServe) // Store Decimal as String
+        }
     }
 }
 
-class Favourites {
-    var favoiurites: [Recipe] = []
+class Favourites: Codable {
+    var favourites: [Recipe] = []
     
     // A closure to notify when a recipe is favorited (leaks memory!)
     var onFavouriteUpdate: (() -> Void)?
 
     func addToFavourites(_ recipe: Recipe) {
         recipe.isFavourite = true
-        favoiurites.append(recipe)
+        favourites.append(recipe)
         
         // Retain Cycle: Closure strongly captures `self`
         onFavouriteUpdate = {
             print("\(recipe.name ?? "Untitled") was added to favorites!")
-            print("Total favorites: \(self.favoiurites.count)") // Strong reference to `self`
+            print("Total favorites: \(self.favourites.count)") // Strong reference to `self`
         }
     }
     
     func removeFromFavourites(_ recipe: Recipe) {
         recipe.isFavourite = false
-        favoiurites.removeAll(where: {$0.name == recipe.name}) //okay we realy need some unique identifiers here...
+        favourites.removeAll(where: {$0.name == recipe.name}) //okay we realy need some unique identifiers here...
         
         // Retain Cycle: Closure strongly captures `self`
         onFavouriteUpdate = {
             print("\(recipe.name ?? "Untitled") was removed from favorites!")
-            print("Total favorites: \(self.favoiurites.count)") // Strong reference to `self`
+            print("Total favorites: \(self.favourites.count)") // Strong reference to `self`
         }
     }
     
-    init() {
+
+    init() {}
+
+    // MARK: - Codable Conformance
+    enum CodingKeys: String, CodingKey {
+        case favourites
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        favourites = try container.decodeIfPresent([Recipe].self, forKey: .favourites) ?? []
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(favourites, forKey: .favourites)
     }
 }

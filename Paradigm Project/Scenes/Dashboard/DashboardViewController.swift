@@ -15,99 +15,106 @@ class DashboardViewController: UIViewController {
     
     var favourites: Favourites? = nil
     
+    override func viewWillAppear(_ animated: Bool){
+        super.viewWillAppear(animated)
+        
+        favourites = FavouritesStorage().loadFavourites()
+        
+        recipeList = RecipeStorage().loadRecipes()
+        
+        recipeTable.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupTable()
         
         //get recipes from memory
-        let chickenJumble = Recipe()
+//        let chickenJumble = Recipe()
+//        
+//        let chicken = Ingredient()
+//        chicken.name = "Chicken"
+//        chicken.quantity = 600
+//        chicken.uom = "g"
+//        
+//        let potatoes = Ingredient()
+//        potatoes.name = "Potatoes"
+//        potatoes.quantity = 4
+//        potatoes.uom = "each"
+//        
+//        let zuchini = Ingredient()
+//        zuchini.name = "Zuchini"
+//        zuchini.quantity = 1
+//        zuchini.uom = "each"
+//        
+//        let tomatoes = Ingredient()
+//        tomatoes.name = "Misc mini tomatoes"
+//        tomatoes.quantity = 1
+//        tomatoes.uom = "tub"
+//        
+//        chickenJumble.name = "Chicken Jumble"
+//        chickenJumble.description = "An easy oven dish you can chuck in the oven and forget about"
+//        chickenJumble.serves = 4
+//        
+//        chickenJumble.ingredients = [chicken, potatoes, zuchini, tomatoes]
+//        
+//        for ingredient in chickenJumble.ingredients {
+//            if let ingredient = ingredient{
+//                ingredient.quantityPerOneServe = ingredient.getQuantityOfOneForServes(Decimal(chickenJumble.serves ?? 0))
+//            }
+//        }
+//        
+//        chickenJumble.method = "1. peel potatoes, \n2. chop potatoes and zuchini into medium chunks \n3. fadd all ingredients to a deep oven dish lined with tin foil and baking paper \n4. season how you like \n5. drissle with generous olive oil \n6. toss gently until everything is seasoned well \n7. put in oven and bake for 40 minutes \n8. remove from oven and serve \n\n Note: if you left it for a while in the oven after done becuase you were busy, just turn the oven back on again for about 10 minutes to reheat before serving"
+//        chickenJumble.isFavourite = false
+//        
+//        recipeList.append(chickenJumble)
+//        
+//        let ricePudding = Recipe()
+//        
+//        let rice = Ingredient()
+//        rice.name = "rice"
+//        rice.quantity = 1
+//        rice.uom = "cup"
+//        
+//        let milk = Ingredient()
+//        milk.name = "milk"
+//        milk.quantity = 1
+//        milk.uom = "L"
+//        
+//        let sugar = Ingredient()
+//        sugar.name = "sugar"
+//        sugar.quantity = 1
+//        sugar.uom = "tbsp"
+//        
+//        let cinnamon = Ingredient()
+//        cinnamon.name = "cinnamon"
+//        cinnamon.quantity = 1
+//        cinnamon.uom = "tsp"
+//        
+//        let raisins = Ingredient()
+//        raisins.name = "raisins"
+//        raisins.quantity = 0.5
+//        raisins.uom = "handfull"
+//        
+//        ricePudding.ingredients = [rice, milk, sugar, cinnamon, raisins]
+//        
+//        ricePudding.name = "Rice Pudding"
+//        ricePudding.description = "A mostly healthy rice dessert. per serve it has less sugar than most people have in their coffees each morning. Creamy and yum!"
+//        ricePudding.serves = 2
+//        
+//        for ingredient in ricePudding.ingredients {
+//            if let ingredient = ingredient{
+//                ingredient.quantityPerOneServe = ingredient.getQuantityOfOneForServes(Decimal(ricePudding.serves ?? 0))
+//            }
+//        }
+//        
+//        ricePudding.method = "1. rinse your rice \n2. add to a pot with milk \n3. mix with milk, sugar, cinnamon and raisins \n4. simmer until milk has evaporated and rice is tender. stiring often to prevent burning or boiling over \n5. serve \n\n lasts 6 days in fridge"
+//        ricePudding.isFavourite = true
+//        
+//        recipeList.append(ricePudding)
         
-        let chicken = Ingredient()
-        chicken.name = "Chicken"
-        chicken.quantity = 600
-        chicken.uom = "g"
-        
-        let potatoes = Ingredient()
-        potatoes.name = "Potatoes"
-        potatoes.quantity = 4
-        potatoes.uom = "each"
-        
-        let zuchini = Ingredient()
-        zuchini.name = "Zuchini"
-        zuchini.quantity = 1
-        zuchini.uom = "each"
-        
-        let tomatoes = Ingredient()
-        tomatoes.name = "Misc mini tomatoes"
-        tomatoes.quantity = 1
-        tomatoes.uom = "tub"
-        
-        chickenJumble.name = "Chicken Jumble"
-        chickenJumble.description = "An easy oven dish you can chuck in the oven and forget about"
-        chickenJumble.serves = 4
-        
-        chickenJumble.ingredients = [chicken, potatoes, zuchini, tomatoes]
-        
-        for ingredient in chickenJumble.ingredients {
-            if let ingredient = ingredient{
-                ingredient.quantityPerOneServe = ingredient.getQuantityOfOneForServes(chickenJumble.serves)
-            }
-        }
-        
-        chickenJumble.method = "1. peel potatoes, \n2. chop potatoes and zuchini into medium chunks \n3. fadd all ingredients to a deep oven dish lined with tin foil and baking paper \n4. season how you like \n5. drissle with generous olive oil \n6. toss gently until everything is seasoned well \n7. put in oven and bake for 40 minutes \n8. remove from oven and serve \n\n Note: if you left it for a while in the oven after done becuase you were busy, just turn the oven back on again for about 10 minutes to reheat before serving"
-        chickenJumble.isFavourite = false
-        
-        recipeList.append(chickenJumble)
-        
-        let ricePudding = Recipe()
-        
-        let rice = Ingredient()
-        rice.name = "rice"
-        rice.quantity = 1
-        rice.uom = "cup"
-        
-        let milk = Ingredient()
-        milk.name = "milk"
-        milk.quantity = 1
-        milk.uom = "L"
-        
-        let sugar = Ingredient()
-        sugar.name = "sugar"
-        sugar.quantity = 1
-        sugar.uom = "tbsp"
-        
-        let cinnamon = Ingredient()
-        cinnamon.name = "cinnamon"
-        cinnamon.quantity = 1
-        cinnamon.uom = "tsp"
-        
-        let raisins = Ingredient()
-        raisins.name = "raisins"
-        raisins.quantity = 0.5
-        raisins.uom = "handfull"
-        
-        ricePudding.ingredients = [rice, milk, sugar, cinnamon, raisins]
-        
-        ricePudding.name = "Rice Pudding"
-        ricePudding.description = "A mostly healthy rice dessert. per serve it has less sugar than most people have in their coffees each morning. Creamy and yum!"
-        ricePudding.serves = 2
-        
-        for ingredient in ricePudding.ingredients {
-            if let ingredient = ingredient{
-                ingredient.quantityPerOneServe = ingredient.getQuantityOfOneForServes(ricePudding.serves)
-            }
-        }
-        
-        ricePudding.method = "1. rinse your rice \n2. add to a pot with milk \n3. mix with milk, sugar, cinnamon and raisins \n4. simmer until milk has evaporated and rice is tender. stiring often to prevent burning or boiling over \n5. serve \n\n lasts 6 days in fridge"
-        ricePudding.isFavourite = true
-        
-        recipeList.append(ricePudding)
-        
-        //get favourites from memory
-        
-        favourites = Favourites()
-        favourites?.addToFavourites(ricePudding)
+//        RecipeStorage().saveRecipes(recipeList)
         
     }
     
@@ -177,7 +184,9 @@ extension DashboardViewController: UITableViewDataSource, UITableViewDelegate {
                 fatalError("Navigation controller not found")
             }
             
-            secondViewController.recipe = recipe
+            secondViewController.index = indexPath.row
+            
+            secondViewController.recipeList = recipeList
             
             secondViewController.favourites = favourites
             

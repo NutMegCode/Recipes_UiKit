@@ -20,11 +20,10 @@ class IngredientCell: UITableViewCell {
     }
     
     func setIngredient(ingredient: Ingredient){
-        qtyLabel.text = "\(ingredient.quantity ?? 0)"
+        qtyLabel.text = getDoubleToString(ingredient.quantity)
         uomLabel.text = ingredient.uom
         titleLabel.text = ingredient.name
     }
-
-
+    
 }
 

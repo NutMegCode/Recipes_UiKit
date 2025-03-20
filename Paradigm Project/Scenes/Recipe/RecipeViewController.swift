@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class RecipeViewController: UIViewController {
     
@@ -20,6 +21,10 @@ class RecipeViewController: UIViewController {
     
     @IBOutlet weak var ingredientTableHeight: NSLayoutConstraint!
     
+    var index: Int? = nil
+    
+    var recipeList: [Recipe] = []
+    
     var recipe: Recipe? = nil
     
     var favourites: Favourites? = nil
@@ -28,14 +33,15 @@ class RecipeViewController: UIViewController {
     
     let rowHight = 50
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        recipe = recipeList[index ?? 0]
         
         titleLabel.text = recipe?.name ?? "-"
         descriptionLabel.text = recipe?.description ?? "-"
         methodLabel.text = recipe?.method ?? "-"
-        servesField.text = "\(recipe?.serves ?? 0)"
+        servesField.text = getDoubleToString(recipe?.serves)
         
         favouriteImage.image = (recipe?.isFavourite ?? false) ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
@@ -54,33 +60,39 @@ class RecipeViewController: UIViewController {
         
     }
     
-    @IBAction func recalculateAsFloat(_ sender: Any) {
+    @IBAction func recalculateIngredientQuantities(_ sender: Any) {
         
         if let ingredientsList = recipe?.ingredients,
-           let serves = Double(servesField.text ?? "0"){
+           let servesDouble = Double(servesField.text ?? "0"),
+           let floatServes = Float(servesField.text ?? "0"){
+            
+            let decimalServes = Decimal(servesDouble)
             
             for ingredient in ingredientsList {
                 if let quantityPerOneServe = ingredient?.quantityPerOneServe {
-                    ingredient?.quantity = quantityPerOneServe * serves
+                    
+                    let doubleResult = NSDecimalNumber(decimal: quantityPerOneServe).doubleValue * servesDouble
+                    debugPrint("Double result \(ingredient?.name ?? ""):\(String(format: "%.20f", doubleResult))")
+                    
+                    let floatResult = NSDecimalNumber(decimal: quantityPerOneServe).floatValue * floatServes
+                    debugPrint("Float result\(ingredient?.name ?? ""): \(String(format: "%.20f", floatResult))")
+                    
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = .decimal
+                    formatter.minimumFractionDigits = 20
+                    formatter.maximumFractionDigits = 20
+                    
+                    let decimalResult = quantityPerOneServe * decimalServes
+                    if let formattedDecimal = formatter.string(from: decimalResult as NSDecimalNumber) {
+                        debugPrint("Decimal result\(ingredient?.name ?? ""): \(formattedDecimal)")
+                    }
+                    
+                    debugPrint("==============================")
+                    
+                    ingredient?.quantity = doubleResult
+                    
                 }
             }
-        }
-        
-        ingredientsTable.reloadData()
-    }
-    
-    @IBAction func recalculateAsFDouble(_ sender: Any) {
-        
-        if let ingredientsList = recipe?.ingredients,
-           let serves = Float(servesField.text ?? "0"){
-            
-            for ingredient in ingredientsList {
-                if let quantityPerOneServe = ingredient?.quantityPerOneServe {
-                    ingredient?.quantity = Double(Float(quantityPerOneServe) * serves)
-                }
-
-            }
-            
         }
         
         ingredientsTable.reloadData()
@@ -105,6 +117,8 @@ class RecipeViewController: UIViewController {
     @IBAction func saveButtonPressed(_ sender: Any) {
         
         //we want to actually apply the changes to the recipe and favourites files
+        FavouritesStorage().saveFavorites(favourites)
+        RecipeStorage().saveRecipes(recipeList)
         
         //then pop the VC back to dashboard
         guard let navigationController = navigationController else {

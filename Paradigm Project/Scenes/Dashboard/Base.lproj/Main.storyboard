@@ -30,12 +30,21 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="6r5-Tq-3gl"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRh-F8-eBx">
+                                <rect key="frame" x="289" y="119.33333333333331" width="94" height="35"/>
+                                <color key="tintColor" systemColor="systemTealColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Add New"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="fRh-F8-eBx" firstAttribute="centerY" secondItem="B7y-p5-kdq" secondAttribute="centerY" id="6FU-Mt-7Bh"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="QTZ-kL-0iW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vhu-FG-t9E" secondAttribute="trailing" constant="20" id="bBw-RW-UFG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fRh-F8-eBx" secondAttribute="trailing" constant="10" id="cYS-75-cXt"/>
+                            <constraint firstItem="fRh-F8-eBx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="B7y-p5-kdq" secondAttribute="trailing" constant="10" id="caX-wR-zq4"/>
                             <constraint firstItem="Vhu-FG-t9E" firstAttribute="top" secondItem="B7y-p5-kdq" secondAttribute="bottom" constant="20" id="k8H-DC-2vX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Vhu-FG-t9E" secondAttribute="bottom" constant="20" id="lXV-x9-c2A"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nsw-eY-a50"/>
@@ -73,6 +82,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
