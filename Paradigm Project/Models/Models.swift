@@ -11,7 +11,7 @@ class Recipe {
     var description: String? = nil
     var ingredients: [Ingredient?] = []
     var method: String? = nil
-    var favourites: Favourites? = nil //Hard circular reference which causes a memory leak here
+    var isFavourite: Bool = false
     
     init() {
     }
@@ -33,6 +33,31 @@ class Ingredient {
 
 class Favourites {
     var favoiurites: [Recipe] = []
+    
+    // A closure to notify when a recipe is favorited (leaks memory!)
+    var onFavouriteUpdate: (() -> Void)?
+
+    func addToFavourites(_ recipe: Recipe) {
+        recipe.isFavourite = true
+        favoiurites.append(recipe)
+        
+        // Retain Cycle: Closure strongly captures `self`
+        onFavouriteUpdate = {
+            print("\(recipe.name ?? "Untitled") was added to favorites!")
+            print("Total favorites: \(self.favoiurites.count)") // Strong reference to `self`
+        }
+    }
+    
+    func removeFromFavourites(_ recipe: Recipe) {
+        recipe.isFavourite = false
+        favoiurites.removeAll(where: {$0.name == recipe.name}) //okay we realy need some unique identifiers here...
+        
+        // Retain Cycle: Closure strongly captures `self`
+        onFavouriteUpdate = {
+            print("\(recipe.name ?? "Untitled") was removed from favorites!")
+            print("Total favorites: \(self.favoiurites.count)") // Strong reference to `self`
+        }
+    }
     
     init() {
     }

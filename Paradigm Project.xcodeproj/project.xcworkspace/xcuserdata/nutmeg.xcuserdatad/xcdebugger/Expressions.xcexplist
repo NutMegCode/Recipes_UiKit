@@ -12,6 +12,9 @@
          contextName = "RecipeViewController.favouriteButtonPressed(_:):RecipeViewController.swift">
          <PersistentStrings>
             <PersistentString
+               value = "recipe.isFavourite">
+            </PersistentString>
+            <PersistentString
                value = "isFavourite">
             </PersistentString>
          </PersistentStrings>

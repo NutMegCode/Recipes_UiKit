@@ -18,12 +18,16 @@ class RecipeViewController: UIViewController {
     
     @IBOutlet weak var favouriteImage: UIImageView!
     
-    
     @IBOutlet weak var ingredientTableHeight: NSLayoutConstraint!
     
     var recipe: Recipe? = nil
     
+    var favourites: Favourites? = nil
+    
     var isFavourite = false
+    
+    let rowHight = 50
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,23 +37,20 @@ class RecipeViewController: UIViewController {
         methodLabel.text = recipe?.method ?? "-"
         servesField.text = "\(recipe?.serves ?? 0)"
         
-        isFavourite = recipe?.favourites?.favoiurites.contains(where: { $0.name == recipe?.name }) ?? false
-        
-        favouriteImage.image = isFavourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        favouriteImage.image = (recipe?.isFavourite ?? false) ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
         setupTable()
-        
-        // Do any additional setup after loading the view.
+
     }
     
-    let jobCellIdentifier = "IngredientCell"
+    let ingredientCellIdentifier = "IngredientCell"
 
     private func setupTable() {
         
-        let jobCellNib = UINib(nibName: jobCellIdentifier, bundle: nil)
-        ingredientsTable.register(jobCellNib, forCellReuseIdentifier: jobCellIdentifier)
+        let ingredientCellNib = UINib(nibName: ingredientCellIdentifier, bundle: nil)
+        ingredientsTable.register(ingredientCellNib, forCellReuseIdentifier: ingredientCellIdentifier)
         
-        ingredientTableHeight.constant = 50
+        ingredientTableHeight.constant = CGFloat(rowHight * (recipe?.ingredients.count ?? 0))
         
     }
     
@@ -80,7 +81,6 @@ class RecipeViewController: UIViewController {
 
             }
             
-                
         }
         
         ingredientsTable.reloadData()
@@ -89,13 +89,29 @@ class RecipeViewController: UIViewController {
     
     @IBAction func favouriteButtonPressed(_ sender: Any) {
         if let recipe = recipe {
-            recipe.favourites?.favoiurites.append(recipe)
-            
-            isFavourite = recipe.favourites?.favoiurites.contains(where: { $0.name == recipe.name }) ?? false
-            
-            favouriteImage.image = isFavourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+            if recipe.isFavourite {
+                favourites?.removeFromFavourites(recipe)
+            }else{
+                favourites?.addToFavourites(recipe)
+            }
+                                    
+            favouriteImage.image = recipe.isFavourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
 
         }
+        
+    }
+    
+    
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        
+        //we want to actually apply the changes to the recipe and favourites files
+        
+        //then pop the VC back to dashboard
+        guard let navigationController = navigationController else {
+            fatalError("Navigation controller not found")
+        }// I need to create a centralised controller. this is just painful
+        
+        navigationController.popViewController(animated: true)
         
     }
     
@@ -119,7 +135,7 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: jobCellIdentifier, for: indexPath) as? IngredientCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ingredientCellIdentifier, for: indexPath) as? IngredientCell
         
         let ingredients = recipe?.ingredients
         
@@ -147,21 +163,8 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
     
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return CGFloat(rowHight)
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        
-//        let things = viewModel.output.things.value
-//
-//        if let things,
-//           things.count > indexPath.row,
-//           let thing = serviceJobs[indexPath.row].thing {
-//
-//            myCoordinator.start(thing: thing)
-//
-//        }
-//
-//    }
+
 }
 
