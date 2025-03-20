@@ -16,14 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dashboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7y-p5-kdq">
-                                <rect key="frame" x="138" y="123.00000000000001" width="117" height="27.666666666666671"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Recipes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7y-p5-kdq">
+                                <rect key="frame" x="127.33333333333333" y="123.00000000000001" width="138.66666666666669" height="27.666666666666671"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="744-x4-2DZ">
-                                <rect key="frame" x="159" y="409" width="75" height="35"/>
+                                <rect key="frame" x="274" y="121" width="75" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
@@ -31,12 +31,20 @@
                                     <action selector="transitionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YRA-Ix-cPh"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Vhu-FG-t9E">
+                                <rect key="frame" x="20" y="170.66666666666669" width="353" height="627.33333333333326"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="QTZ-kL-0iW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vhu-FG-t9E" secondAttribute="trailing" constant="20" id="bBw-RW-UFG"/>
+                            <constraint firstItem="Vhu-FG-t9E" firstAttribute="top" secondItem="B7y-p5-kdq" secondAttribute="bottom" constant="20" id="k8H-DC-2vX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Vhu-FG-t9E" secondAttribute="bottom" constant="20" id="lXV-x9-c2A"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nsw-eY-a50"/>
+                            <constraint firstItem="Vhu-FG-t9E" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ubA-lw-VKO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2sQ-9g-vss"/>
