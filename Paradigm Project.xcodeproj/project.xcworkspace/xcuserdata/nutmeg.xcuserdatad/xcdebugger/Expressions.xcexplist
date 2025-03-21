@@ -3,12 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "RecipeViewController.viewDidLoad():RecipeViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "RecipeViewController.refreshButtonPushed(_:):RecipeViewController.swift">
-      </ContextState>
-      <ContextState
          contextName = "RecipeViewController.favouriteButtonPressed(_:):RecipeViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -18,6 +12,37 @@
                value = "isFavourite">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NewRecipeViewController.saveButtonPressed(_:):NewRecipeViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NewIngredientCell.getIngredient():NewIngredientCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "qtyTextField.text">
+            </PersistentString>
+            <PersistentString
+               value = "uomTextField.text">
+            </PersistentString>
+            <PersistentString
+               value = "titleTextField.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RecipeViewController.viewDidLoad():RecipeViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NewRecipeViewController.addIngredientPressed(_:):NewRecipeViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "rows">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RecipeViewController.refreshButtonPushed(_:):RecipeViewController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

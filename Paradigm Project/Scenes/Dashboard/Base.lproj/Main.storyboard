@@ -35,24 +35,52 @@
                                 <color key="tintColor" systemColor="systemTealColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Add New"/>
+                                <connections>
+                                    <action selector="addNewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CWN-yA-L8L"/>
+                                </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIV-rV-uWh">
+                                <rect key="frame" x="20" y="114.33333333333331" width="87.333333333333329" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="GdZ-CL-gUc"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="filterFavouritePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SLs-Du-byR"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="K36-6u-MlV">
+                                <rect key="frame" x="41" y="114.00000000000001" width="45" height="44.666666666666671"/>
+                                <color key="tintColor" systemColor="systemYellowColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="K36-6u-MlV" secondAttribute="height" multiplier="1:1" id="FZW-sh-af2"/>
+                                    <constraint firstAttribute="height" constant="45" id="sxv-f3-5rN"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="fRh-F8-eBx" firstAttribute="centerY" secondItem="B7y-p5-kdq" secondAttribute="centerY" id="6FU-Mt-7Bh"/>
+                            <constraint firstItem="K36-6u-MlV" firstAttribute="centerX" secondItem="AIV-rV-uWh" secondAttribute="centerX" id="DEt-Sc-B67"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="QTZ-kL-0iW"/>
+                            <constraint firstItem="K36-6u-MlV" firstAttribute="centerY" secondItem="AIV-rV-uWh" secondAttribute="centerY" id="Z0m-X6-9HL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vhu-FG-t9E" secondAttribute="trailing" constant="20" id="bBw-RW-UFG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fRh-F8-eBx" secondAttribute="trailing" constant="10" id="cYS-75-cXt"/>
                             <constraint firstItem="fRh-F8-eBx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="B7y-p5-kdq" secondAttribute="trailing" constant="10" id="caX-wR-zq4"/>
+                            <constraint firstItem="AIV-rV-uWh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="d3N-30-Hz2"/>
                             <constraint firstItem="Vhu-FG-t9E" firstAttribute="top" secondItem="B7y-p5-kdq" secondAttribute="bottom" constant="20" id="k8H-DC-2vX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Vhu-FG-t9E" secondAttribute="bottom" constant="20" id="lXV-x9-c2A"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nsw-eY-a50"/>
+                            <constraint firstItem="AIV-rV-uWh" firstAttribute="centerY" secondItem="B7y-p5-kdq" secondAttribute="centerY" id="oKY-t0-lvL"/>
+                            <constraint firstItem="B7y-p5-kdq" firstAttribute="leading" secondItem="AIV-rV-uWh" secondAttribute="trailing" constant="20" id="qLe-ri-bIQ"/>
                             <constraint firstItem="Vhu-FG-t9E" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ubA-lw-VKO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2sQ-9g-vss"/>
                     <connections>
+                        <outlet property="filterFavouritesImage" destination="K36-6u-MlV" id="lXM-gd-24w"/>
                         <outlet property="recipeTable" destination="Vhu-FG-t9E" id="YsB-07-oLZ"/>
                     </connections>
                 </viewController>
@@ -80,11 +108,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

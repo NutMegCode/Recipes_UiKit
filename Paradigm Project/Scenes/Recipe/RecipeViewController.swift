@@ -129,6 +129,33 @@ class RecipeViewController: UIViewController {
         
     }
     
+    
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        
+        if let recipe = recipe {
+            if recipe.isFavourite {
+                favourites?.removeFromFavourites(recipe)
+            }
+            
+            if let index = index{
+                recipeList.remove(at: index)
+            }
+            
+            FavouritesStorage().saveFavorites(favourites)
+            
+            RecipeStorage().saveRecipes(recipeList)
+            
+            //then pop the VC back to dashboard
+            guard let navigationController = navigationController else {
+                fatalError("Navigation controller not found")
+            }// I need to create a centralised controller. this is just painful
+            
+            navigationController.popViewController(animated: true)
+
+        }
+        
+    }
+    
 }
 
 extension RecipeViewController: UITextFieldDelegate {

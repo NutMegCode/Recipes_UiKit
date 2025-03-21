@@ -16,19 +16,25 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="qty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ugT-YB-p2h">
-                        <rect key="frame" x="20" y="19.666666666666668" width="25" height="21.000000000000004"/>
+                        <rect key="frame" x="20" y="19.666666666666668" width="80" height="21.000000000000004"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="BGz-ua-mFg"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="uom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1T-ts-wwH">
-                        <rect key="frame" x="53" y="19.666666666666668" width="34" height="21.000000000000004"/>
+                        <rect key="frame" x="108" y="19.666666666666668" width="60" height="21.000000000000004"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="Uxd-3l-tj0"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1l-gI-Jnt">
-                        <rect key="frame" x="107" y="19.666666666666668" width="29" height="21.000000000000004"/>
+                        <rect key="frame" x="188" y="19.666666666666668" width="29" height="21.000000000000004"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
