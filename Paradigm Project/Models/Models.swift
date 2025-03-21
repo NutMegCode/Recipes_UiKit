@@ -73,6 +73,10 @@ class Favourites: Codable {
     
     // A closure to notify when a recipe is favorited (leaks memory!)
     var onFavouriteUpdate: (() -> Void)?
+    
+    deinit {
+        debugPrint("Favourites deinitialized")
+    }
 
     func addToFavourites(_ recipe: Recipe) {
         recipe.isFavourite = true
@@ -80,9 +84,11 @@ class Favourites: Codable {
         
         // Retain Cycle: Closure strongly captures `self`
         onFavouriteUpdate = {
-            print("\(recipe.name ?? "Untitled") was added to favorites!")
-            print("Total favorites: \(self.favourites.count)") // Strong reference to `self`
+            debugPrint("\(recipe.name ?? "Untitled") was added to favorites!")
+            debugPrint("Total favorites: \(self.favourites.count)") // Strong reference to `self` if you comment out the this line and line 101 the deinit should happen
         }
+        
+        onFavouriteUpdate?()
     }
     
     func removeFromFavourites(_ recipe: Recipe) {
@@ -91,9 +97,11 @@ class Favourites: Codable {
         
         // Retain Cycle: Closure strongly captures `self`
         onFavouriteUpdate = {
-            print("\(recipe.name ?? "Untitled") was removed from favorites!")
-            print("Total favorites: \(self.favourites.count)") // Strong reference to `self`
+            debugPrint("\(recipe.name ?? "Untitled") was removed from favorites!")
+            debugPrint("Total favorites: \(self.favourites.count)") // Strong reference to `self` if you comment out the this line and line 88 the deinit should happen
         }
+        
+        onFavouriteUpdate?()
     }
     
 
