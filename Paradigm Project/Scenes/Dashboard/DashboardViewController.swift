@@ -18,6 +18,8 @@ class DashboardViewController: UIViewController {
     
     var filtered = false
     
+    let importer = RecipeImporter()
+    
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         
@@ -80,6 +82,29 @@ class DashboardViewController: UIViewController {
 
     }
     
+    @IBAction func importButtonPressed(_ sender: Any) {
+        
+        importer.onRecipesImported = { [weak self] newRecipes in //weak self here is easily missed, but prevents a hard reference retain cycle causing memory leaks
+            
+            guard let self = self else { return }
+            
+            self.recipeList.append(contentsOf: newRecipes)
+            self.favourites?.favourites = recipeList.filter { $0.isFavourite }
+            RecipeStorage().saveRecipes(recipeList)
+            FavouritesStorage().saveFavorites(favourites)
+            self.recipeTable.reloadData()
+            
+        }
+        
+        importer.importRecipes(from: self)
+        
+    }
+    
+    @IBAction func exportButtonPressed(_ sender: Any) {
+        let exporter = RecipeExporter()
+        exporter.exportRecipes(recipeList, from: self)
+    }
+    
     
 }
 
@@ -113,7 +138,6 @@ extension DashboardViewController: UITableViewDataSource, UITableViewDelegate {
             debugPrint("Error: with the ingredient Cell")
             return UITableViewCell()
         }
-        
         
     }
     

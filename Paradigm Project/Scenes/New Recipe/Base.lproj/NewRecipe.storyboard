@@ -195,6 +195,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomSpace" destination="qVh-av-Vx0" id="Z5F-cU-59c"/>
                         <outlet property="descriptionTextView" destination="L6T-8L-zmV" id="0gr-qB-pUb"/>
                         <outlet property="favouriteImage" destination="R5R-bi-6zn" id="GH6-Nv-GcK"/>
                         <outlet property="ingredientTableHeight" destination="Wep-cb-duF" id="pTb-f3-9n3"/>

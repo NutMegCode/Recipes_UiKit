@@ -24,6 +24,8 @@ class NewRecipeViewController: UIViewController {
     
     @IBOutlet weak var ingredientsTable: UITableView!
     
+    @IBOutlet weak var bottomSpace: NSLayoutConstraint!
+    
     var index: Int? = nil
     
     var recipeList: [Recipe] = []
@@ -38,12 +40,19 @@ class NewRecipeViewController: UIViewController {
     
     var rows = 1
     
+    private var keyboardSize: CGRect = CGRect(x: 0, y: 0,
+                                              width: 0, height: 0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         favouriteImage.image = (recipe.isFavourite) ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
         setupTable()
+        
+        setDismissKeyboard()
+        subscribeToKeyboard()
+
 
     }
     
@@ -120,6 +129,22 @@ class NewRecipeViewController: UIViewController {
     
 }
 
+extension NewRecipeViewController{
+    func setDismissKeyboard(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(NewRecipeViewController.dismissKeyboard))
+
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard()
+    {
+        view.endEditing(true)
+    }
+}
+
 extension NewRecipeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -153,3 +178,47 @@ extension NewRecipeViewController: UITableViewDataSource, UITableViewDelegate {
 
 }
 
+extension NewRecipeViewController {
+    
+    private func subscribeToKeyboard() {
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardDidShow(notification:)),
+                                               name: UIResponder.keyboardDidShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+
+    }
+    
+    @objc func keyboardDidShow(notification: NSNotification) {
+            
+        print("Keyboard will show")
+                
+        keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+                
+        UIView.animate(withDuration: 0.5, animations: {
+            
+            self.bottomSpace.constant = (self.keyboardSize.height - 40)
+            
+            self.view.layoutIfNeeded()
+            
+        })
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        
+        print("Keyboard will hide")
+
+        UIView.animate(withDuration: 0.5, animations: {
+            
+            self.bottomSpace.constant = 0
+            
+            self.view.layoutIfNeeded()
+        })
+    }
+
+}

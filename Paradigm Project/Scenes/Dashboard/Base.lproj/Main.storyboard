@@ -22,14 +22,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Vhu-FG-t9E">
-                                <rect key="frame" x="20" y="170.66666666666669" width="353" height="627.33333333333326"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="VJQ-xm-6eB"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="6r5-Tq-3gl"/>
-                                </connections>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRh-F8-eBx">
                                 <rect key="frame" x="289" y="119.33333333333331" width="94" height="35"/>
                                 <color key="tintColor" systemColor="systemTealColor"/>
@@ -39,7 +31,7 @@
                                     <action selector="addNewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CWN-yA-L8L"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIV-rV-uWh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIV-rV-uWh" userLabel="Filter favourites Button">
                                 <rect key="frame" x="20" y="114.33333333333331" width="87.333333333333329" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="GdZ-CL-gUc"/>
@@ -58,20 +50,84 @@
                                     <constraint firstAttribute="height" constant="45" id="sxv-f3-5rN"/>
                                 </constraints>
                             </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Vhu-FG-t9E">
+                                <rect key="frame" x="20" y="170.66666666666669" width="353" height="561.33333333333326"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="VJQ-xm-6eB"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="6r5-Tq-3gl"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQ2-6S-BbG">
+                                <rect key="frame" x="0.0" y="740" width="393" height="70"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAD-zy-rpJ" userLabel="Import Button">
+                                        <rect key="frame" x="20" y="10" width="166.66666666666666" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="aU3-SL-4F1"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Import">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="14"/>
+                                        </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="importButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vBD-tI-Ai7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ipm-16-hYM" userLabel="Export Button">
+                                        <rect key="frame" x="206.66666666666663" y="10" width="166.33333333333337" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Export">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="14"/>
+                                        </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="exportButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tj4-i9-JYv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="7gu-Yt-vf0"/>
+                                    <constraint firstItem="TAD-zy-rpJ" firstAttribute="centerY" secondItem="wQ2-6S-BbG" secondAttribute="centerY" id="Lmr-K5-Uxc"/>
+                                    <constraint firstItem="Ipm-16-hYM" firstAttribute="leading" secondItem="TAD-zy-rpJ" secondAttribute="trailing" constant="20" id="dEK-st-9Ld"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ipm-16-hYM" secondAttribute="trailing" constant="20" id="mjj-we-9KY"/>
+                                    <constraint firstItem="TAD-zy-rpJ" firstAttribute="leading" secondItem="wQ2-6S-BbG" secondAttribute="leading" constant="20" id="r9u-rq-QTn"/>
+                                    <constraint firstItem="Ipm-16-hYM" firstAttribute="centerY" secondItem="wQ2-6S-BbG" secondAttribute="centerY" id="rT2-1R-KfD"/>
+                                    <constraint firstItem="TAD-zy-rpJ" firstAttribute="width" secondItem="Ipm-16-hYM" secondAttribute="width" id="w37-VX-Zmi"/>
+                                    <constraint firstItem="Ipm-16-hYM" firstAttribute="height" secondItem="TAD-zy-rpJ" secondAttribute="height" id="wBO-RN-HC9"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="fRh-F8-eBx" firstAttribute="centerY" secondItem="B7y-p5-kdq" secondAttribute="centerY" id="6FU-Mt-7Bh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wQ2-6S-BbG" secondAttribute="bottom" constant="8" id="CqX-ei-CIQ"/>
                             <constraint firstItem="K36-6u-MlV" firstAttribute="centerX" secondItem="AIV-rV-uWh" secondAttribute="centerX" id="DEt-Sc-B67"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="QTZ-kL-0iW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wQ2-6S-BbG" secondAttribute="trailing" id="WlV-pU-Mnt"/>
                             <constraint firstItem="K36-6u-MlV" firstAttribute="centerY" secondItem="AIV-rV-uWh" secondAttribute="centerY" id="Z0m-X6-9HL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Vhu-FG-t9E" secondAttribute="trailing" constant="20" id="bBw-RW-UFG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fRh-F8-eBx" secondAttribute="trailing" constant="10" id="cYS-75-cXt"/>
                             <constraint firstItem="fRh-F8-eBx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="B7y-p5-kdq" secondAttribute="trailing" constant="10" id="caX-wR-zq4"/>
                             <constraint firstItem="AIV-rV-uWh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="d3N-30-Hz2"/>
                             <constraint firstItem="Vhu-FG-t9E" firstAttribute="top" secondItem="B7y-p5-kdq" secondAttribute="bottom" constant="20" id="k8H-DC-2vX"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Vhu-FG-t9E" secondAttribute="bottom" constant="20" id="lXV-x9-c2A"/>
+                            <constraint firstItem="wQ2-6S-BbG" firstAttribute="top" secondItem="Vhu-FG-t9E" secondAttribute="bottom" constant="8" id="lXV-x9-c2A"/>
+                            <constraint firstItem="wQ2-6S-BbG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lfm-2Q-afq"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nsw-eY-a50"/>
                             <constraint firstItem="AIV-rV-uWh" firstAttribute="centerY" secondItem="B7y-p5-kdq" secondAttribute="centerY" id="oKY-t0-lvL"/>
                             <constraint firstItem="B7y-p5-kdq" firstAttribute="leading" secondItem="AIV-rV-uWh" secondAttribute="trailing" constant="20" id="qLe-ri-bIQ"/>
@@ -111,6 +167,9 @@
         <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
