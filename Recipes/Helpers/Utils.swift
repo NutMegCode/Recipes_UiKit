@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 //Convert Double? to String
 func getDoubleToString(_ myNum: Double?) -> String {
@@ -28,7 +29,46 @@ func getDoubleToString(_ myNum: Double?) -> String {
     } else {
         formatter.maximumFractionDigits = 2  // Otherwise, show two decimals
     }
+    
     strNum = formatter.string(for: myNum) ?? ""
     
     return strNum
+}
+
+
+func getStringToDouble(_ myStr: String?) -> Double? {
+    
+    guard let myStr = myStr?.trimmingCharacters(in: .whitespacesAndNewlines), !myStr.isEmpty else {
+        return nil
+    }
+    
+    var myNum: Double?
+    
+    do {
+        if let num = Double(myStr) {
+            myNum = num
+        } else {
+            throw NSError(domain: "ConversionError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not convert \(myStr) to a number"])
+        }
+    } catch {
+        ErrorHandler.shared.showError(message: error.localizedDescription)
+        myNum = nil
+    }
+    
+    return myNum
+}
+
+extension UIViewController {
+    func showErrorAlert(message: String, title: String = "Error") {
+        let alertController = UIAlertController(title: title,
+                                                message: message,
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK",
+                                                style: .default))
+        present(alertController, animated: true)
+    }
+}
+
+protocol CellErrorDisplayDelegate: AnyObject {
+    func showError(message: String, title: String)
 }

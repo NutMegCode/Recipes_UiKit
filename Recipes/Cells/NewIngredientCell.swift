@@ -16,13 +16,36 @@ class NewIngredientCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        qtyTextField.layer.borderColor = UIColor.lightGray.cgColor
+        qtyTextField.layer.borderWidth = 0.5
+        
+        uomTextField.layer.borderColor = UIColor.lightGray.cgColor
+        uomTextField.layer.borderWidth = 0.5
+        
+        titleTextField.layer.borderColor = UIColor.lightGray.cgColor
+        titleTextField.layer.borderWidth = 0.5
+        
     }
 
-    func getIngredient() -> Ingredient{
-        var ingredient:Ingredient = Ingredient()
-        ingredient.quantity = Double(qtyTextField.text ?? "0") ?? 0
-        ingredient.uom = uomTextField.text ?? ""
-        ingredient.name = titleTextField.text ?? ""
+    func getIngredient() -> Ingredient? {
+
+        let cleanedQty = qtyTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanedUom = uomTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let cleanedName = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+        let quantity = getStringToDouble(cleanedQty)
+
+        // Return nil if all fields are blank or nil
+        if quantity == nil, cleanedUom.isEmpty, cleanedName.isEmpty {
+            return nil
+        }
+
+        let ingredient = Ingredient()
+        ingredient.quantity = quantity
+        ingredient.uom = cleanedUom
+        ingredient.name = cleanedName
+
         return ingredient
     }
     

@@ -11,6 +11,7 @@ class DashboardViewController: UIViewController {
     
     @IBOutlet weak var recipeTable: UITableView!
     @IBOutlet weak var filterFavouritesImage: UIImageView!
+    @IBOutlet weak var EmptyLabel: UILabel!
     
     var recipeList: [Recipe] = []
     
@@ -27,6 +28,8 @@ class DashboardViewController: UIViewController {
         
         recipeList = RecipeStorage().loadRecipes()
         
+        EmptyLabel.isHidden = !recipeList.isEmpty
+        
         recipeTable.reloadData()
     }
     
@@ -34,6 +37,8 @@ class DashboardViewController: UIViewController {
         super.viewDidLoad()
 
         setupTable()
+        
+        EmptyLabel.isHidden = !recipeList.isEmpty
         
         filterFavouritesImage.image = filtered ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
@@ -92,6 +97,7 @@ class DashboardViewController: UIViewController {
             self.favourites?.favourites = recipeList.filter { $0.isFavourite }
             RecipeStorage().saveRecipes(recipeList)
             FavouritesStorage().saveFavorites(favourites)
+            EmptyLabel.isHidden = !recipeList.isEmpty
             self.recipeTable.reloadData()
             
         }

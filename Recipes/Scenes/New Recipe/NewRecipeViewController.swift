@@ -36,7 +36,7 @@ class NewRecipeViewController: UIViewController {
     
     var isFavourite = false
     
-    let rowHight = 80
+    let rowHight = 60
     
     var rows = 1
     
@@ -52,6 +52,21 @@ class NewRecipeViewController: UIViewController {
         
         setDismissKeyboard()
         subscribeToKeyboard()
+        
+        titleTextField.layer.borderColor = UIColor.lightGray.cgColor
+        titleTextField.layer.borderWidth = 0.5
+        
+        methodTextView.layer.borderColor = UIColor.lightGray.cgColor
+        methodTextView.layer.borderWidth = 0.5
+        
+        servesField.layer.borderColor = UIColor.lightGray.cgColor
+        servesField.layer.borderWidth = 0.5
+        
+        descriptionTextView.layer.borderColor = UIColor.lightGray.cgColor
+        descriptionTextView.layer.borderWidth = 0.5
+        
+        // Register this VC for global error alerts
+        ErrorHandler.shared.presentingViewController = self
 
 
     }
@@ -90,14 +105,17 @@ class NewRecipeViewController: UIViewController {
         
         recipe.name = titleTextField.text ?? ""
         recipe.description = descriptionTextView.text ?? ""
-        recipe.serves = Double(servesField.text ?? "0")
+        recipe.serves = getStringToDouble(servesField.text) // if you put something that can't become a Double here, it'll be caught and set to nil
         recipe.ingredients = []
         
         for index in 0...rows-1 {
             
             if let cell = ingredientsTable.cellForRow(at: IndexPath(row: index, section: 0)) as? NewIngredientCell{
                 
-                recipe.ingredients.append(cell.getIngredient())
+                if let ingredient = cell.getIngredient() {
+                    
+                    recipe.ingredients.append(ingredient)
+                }
             }
         }
         
