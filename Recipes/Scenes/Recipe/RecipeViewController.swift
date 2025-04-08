@@ -118,14 +118,10 @@ class RecipeViewController: UIViewController {
         
         //we want to actually apply the changes to the recipe and favourites files
         FavouritesStorage().saveFavorites(favourites)
+        recipe?.serves = getStringToDouble(servesField.text ?? "0") ?? 0
         RecipeStorage().saveRecipes(recipeList)
         
-        //then pop the VC back to dashboard
-        guard let navigationController = navigationController else {
-            fatalError("Navigation controller not found")
-        }// I need to create a centralised controller. this is just painful
-        
-        navigationController.popViewController(animated: true)
+        NavigationHelper.popViewController(from: self)
         
     }
     

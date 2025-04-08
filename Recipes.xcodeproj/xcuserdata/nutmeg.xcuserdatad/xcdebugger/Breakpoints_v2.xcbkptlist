@@ -7,8 +7,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A7E379B1-9875-47B4-871F-472967681F87"
-            shouldBeEnabled = "Yes"
+            uuid = "939F79EA-3F3C-4E60-8A62-24C5579FFBDA"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Recipes/Scenes/Recipe/RecipeViewController.swift"

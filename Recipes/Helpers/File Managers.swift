@@ -22,6 +22,8 @@ class FavouritesStorage {
                 try data.write(to: fileURL)
             } catch {
                 debugPrint("Error saving favorites: \(error)")
+                ErrorHandler.shared.showError(message: error.localizedDescription)
+
             }
         }
     }
@@ -40,6 +42,7 @@ class FavouritesStorage {
             return try JSONDecoder().decode(Favourites.self, from: data)
         } catch {
             debugPrint("Error loading favorites: \(error)")
+            ErrorHandler.shared.showError(message: error.localizedDescription)
             return Favourites()
         }
     }
@@ -59,6 +62,7 @@ class RecipeStorage {
             try data.write(to: fileURL)
         } catch {
             debugPrint("Error saving recipes: \(error)")
+            ErrorHandler.shared.showError(message: error.localizedDescription)
         }
     }
 
@@ -76,6 +80,7 @@ class RecipeStorage {
             return try JSONDecoder().decode([Recipe].self, from: data)
         } catch {
             debugPrint("Error loading recipes: \(error)")
+            ErrorHandler.shared.showError(message: error.localizedDescription)
             return []
         }
     }
@@ -101,6 +106,7 @@ class RecipeExporter {
             
         } catch {
             debugPrint("Error exporting recipes: \(error)")
+            ErrorHandler.shared.showError(message: error.localizedDescription)
         }
     }
     
@@ -138,6 +144,7 @@ extension RecipeImporter: UIDocumentPickerDelegate {
                 onRecipesImported?(importedRecipes)
             } catch {
                 debugPrint("Error importing recipes: \(error)")
+                ErrorHandler.shared.showError(message: error.localizedDescription)
             }
 
     }

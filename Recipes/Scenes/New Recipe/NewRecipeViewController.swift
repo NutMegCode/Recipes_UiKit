@@ -114,6 +114,8 @@ class NewRecipeViewController: UIViewController {
                 
                 if let ingredient = cell.getIngredient() {
                     
+                    ingredient.quantityPerOneServe = ingredient.getQuantityOfOneForServes(Decimal(recipe.serves ?? 0))
+                    
                     recipe.ingredients.append(ingredient)
                 }
             }
@@ -123,26 +125,23 @@ class NewRecipeViewController: UIViewController {
         
         recipe.isFavourite = isFavourite
         
-        recipeList.append(recipe)
-
-        
-        //we want to actually apply the changes to the recipe and favourites files
-        
-        if recipe.isFavourite {
-            favourites?.addToFavourites(recipe)
+        //if they didn't actually add anything just do nothing
+        if !recipe.isEmpty() {
+            recipeList.append(recipe)
+            
+            
+            //we want to actually apply the changes to the recipe and favourites files
+            
+            if recipe.isFavourite {
+                favourites?.addToFavourites(recipe)
+            }
+            
+            FavouritesStorage().saveFavorites(favourites)
+            
+            RecipeStorage().saveRecipes(recipeList)
         }
         
-        FavouritesStorage().saveFavorites(favourites)
-        
-        RecipeStorage().saveRecipes(recipeList)
-        
-        //then pop the VC back to dashboard
-        guard let navigationController = navigationController else {
-            fatalError("Navigation controller not found")
-        }// I need to create a centralised controller. this is just painful
-        
-        navigationController.popViewController(animated: true)
-        
+        NavigationHelper.popViewController(from: self)
     }
     
 }

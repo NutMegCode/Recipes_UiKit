@@ -23,6 +23,11 @@ class Recipe: Codable {
         self.method = method
         self.isFavourite = isFavourite
     }
+    
+    func isEmpty() -> Bool {
+        
+        return name?.isEmpty ?? true && serves == nil && description?.isEmpty ?? true && ingredients.isEmpty && method?.isEmpty ?? true
+    }
 }
 
 

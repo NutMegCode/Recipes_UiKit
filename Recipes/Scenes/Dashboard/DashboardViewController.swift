@@ -28,7 +28,7 @@ class DashboardViewController: UIViewController {
         
         recipeList = RecipeStorage().loadRecipes()
         
-        EmptyLabel.isHidden = !recipeList.isEmpty
+        handleEmptyView()
         
         recipeTable.reloadData()
     }
@@ -38,10 +38,15 @@ class DashboardViewController: UIViewController {
 
         setupTable()
         
-        EmptyLabel.isHidden = !recipeList.isEmpty
+        handleEmptyView()
         
         filterFavouritesImage.image = filtered ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
+    }
+    
+    private func handleEmptyView() {
+        EmptyLabel.isHidden = (filtered ? recipeList.filter { $0.isFavourite }.count : recipeList.count) != 0 //its one line sure, but is it easy to read? ... no
+        EmptyLabel.text = filtered ? "No favourite recipes" : "No recipes"
     }
     
     let recipeCellIdentifier = "RecipeCell"
@@ -56,24 +61,7 @@ class DashboardViewController: UIViewController {
     
     @IBAction func addNewPressed(_ sender: Any) {
         
-                
-        let newRecipeStoryboard = UIStoryboard(name: "NewRecipe", bundle: nil)
-        
-        // Instantiate the view controller from the second storyboard
-        guard let newRecipeViewController = newRecipeStoryboard.instantiateViewController(withIdentifier: "NewRecipe") as? NewRecipeViewController else {
-            fatalError("Unable to instantiate NewRecipeViewController from NewRecipeStoryboard")
-        }
-        
-        guard let navigationController = navigationController else {
-            fatalError("Navigation controller not found")
-        }
-                
-        newRecipeViewController.recipeList = recipeList
-        
-        newRecipeViewController.favourites = favourites
-        
-        // Push or present the second view controller
-        navigationController.pushViewController(newRecipeViewController, animated: true)
+        NavigationHelper.goToNewRecipeView(from: self, recipeList: recipeList, favourites: favourites)
         
     }
     
@@ -84,6 +72,7 @@ class DashboardViewController: UIViewController {
         recipeTable.reloadData()
         
         filterFavouritesImage.image = filtered ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        handleEmptyView()
 
     }
     
@@ -158,25 +147,7 @@ extension DashboardViewController: UITableViewDataSource, UITableViewDelegate {
 
         if recipes.count > indexPath.row{
             
-            let secondStoryboard = UIStoryboard(name: "Recipe", bundle: nil)
-            
-            // Instantiate the view controller from the second storyboard
-            guard let secondViewController = secondStoryboard.instantiateViewController(withIdentifier: "Recipe") as? RecipeViewController else {
-                fatalError("Unable to instantiate SecondViewController from SecondStoryboard")
-            }
-            
-            guard let navigationController = navigationController else {
-                fatalError("Navigation controller not found")
-            }
-            
-            secondViewController.index = indexPath.row
-            
-            secondViewController.recipeList = recipeList
-            
-            secondViewController.favourites = favourites
-            
-            // Push or present the second view controller
-            navigationController.pushViewController(secondViewController, animated: true)
+            NavigationHelper.goToRecipeView(from: self, indexPath: indexPath, recipeList: recipeList, favourites: favourites)
             
         }
         
