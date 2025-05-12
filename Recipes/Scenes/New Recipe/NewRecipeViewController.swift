@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Recipes
+//  New Recipe
 //
 //  Created by Meg on 28/2/2025.
 //
@@ -9,6 +9,12 @@ import UIKit
 import Foundation
 
 class NewRecipeViewController: UIViewController {
+    
+    // The new recipe screen allows a user to add a new recipe to the app
+    // Current functionality should include the following features:
+    // ability to add a recipe name, serves, description, and method
+    // ability to add a number of ingredients with their title, uom, and quantity
+    // a button to save the entered information as a Recipe to the recipe and favourites list as required
     
     @IBOutlet weak var titleTextField: UITextField!
     
@@ -40,18 +46,17 @@ class NewRecipeViewController: UIViewController {
     
     var rows = 1
     
+    // for handling the keyboard so we don't block the user from the save button
     private var keyboardSize: CGRect = CGRect(x: 0, y: 0,
                                               width: 0, height: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // set the initial display
         favouriteImage.image = (recipe.isFavourite) ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
         setupTable()
-        
-        setDismissKeyboard()
-        subscribeToKeyboard()
         
         titleTextField.layer.borderColor = UIColor.lightGray.cgColor
         titleTextField.layer.borderWidth = 0.5
@@ -65,12 +70,17 @@ class NewRecipeViewController: UIViewController {
         descriptionTextView.layer.borderColor = UIColor.lightGray.cgColor
         descriptionTextView.layer.borderWidth = 0.5
         
-        // Register this VC for global error alerts
+        //handle the keyboard
+        setDismissKeyboard()
+        subscribeToKeyboard()
+        
+        // Register this VC for global error alerts - this will display an error if the user attempts to save a recipe with faulty data (a string as a number) or no data at all
         ErrorHandler.shared.presentingViewController = self
-
 
     }
     
+    
+    // set up the table, registering the cells it will use
     let ingredientCellIdentifier = "NewIngredientCell"
 
     private func setupTable() {
@@ -82,6 +92,7 @@ class NewRecipeViewController: UIViewController {
         
     }
     
+    // a button to add another ingredient cell that can then be filled in
     @IBAction func addIngredientPressed(_ sender: Any) {
         
         rows += 1
@@ -92,7 +103,7 @@ class NewRecipeViewController: UIViewController {
         
     }
     
-    
+    // a button to flag this recipe as a favourite or not
     @IBAction func favouriteButtonPressed(_ sender: Any) {
 
         isFavourite.toggle()
@@ -101,6 +112,7 @@ class NewRecipeViewController: UIViewController {
     }
     
     
+    // a button to save this recipe to the recipe list, and the favourites list if it is one, and then pop back to the dashboard where the new recipe will be displayed
     @IBAction func saveButtonPressed(_ sender: Any) {
         
         recipe.name = titleTextField.text ?? ""
@@ -108,6 +120,7 @@ class NewRecipeViewController: UIViewController {
         recipe.serves = getStringToDouble(servesField.text) // if you put something that can't become a Double here, it'll be caught and set to nil
         recipe.ingredients = []
         
+        // collect the data from the ingredients table, create Ingredients objects from them, and add to the recipies ingredients list
         for index in 0...rows-1 {
             
             if let cell = ingredientsTable.cellForRow(at: IndexPath(row: index, section: 0)) as? NewIngredientCell{
@@ -129,9 +142,7 @@ class NewRecipeViewController: UIViewController {
         if !recipe.isEmpty() {
             recipeList.append(recipe)
             
-            
             //we want to actually apply the changes to the recipe and favourites files
-            
             if recipe.isFavourite {
                 favourites?.addToFavourites(recipe)
             }
@@ -141,11 +152,13 @@ class NewRecipeViewController: UIViewController {
             RecipeStorage().saveRecipes(recipeList)
         }
         
+        // pop back to the dashboard
         NavigationHelper.popViewController(from: self)
     }
     
 }
 
+// make sure you can tap outside of the view to dismiss the keyboard so the user does not get stuck with the keyboard blocking the save button or other fields
 extension NewRecipeViewController{
     func setDismissKeyboard(){
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -162,6 +175,7 @@ extension NewRecipeViewController{
     }
 }
 
+// code for the Ingredients table
 extension NewRecipeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -195,6 +209,7 @@ extension NewRecipeViewController: UITableViewDataSource, UITableViewDelegate {
 
 }
 
+// follow the keyboards showing status so we can handle the closing of the keyboard
 extension NewRecipeViewController {
     
     private func subscribeToKeyboard() {

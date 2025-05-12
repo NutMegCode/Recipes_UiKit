@@ -7,14 +7,16 @@
 
 import Foundation
 
+// The Recipe class
 class Recipe: Codable {
     var name: String?
     var serves: Double?
     var description: String?
-    var ingredients: [Ingredient?] // Removed optional type inside array
+    var ingredients: [Ingredient?]
     var method: String?
     var isFavourite: Bool
 
+    // initialisation
     init(name: String? = nil, serves: Double? = nil, description: String? = nil, ingredients: [Ingredient] = [], method: String? = nil, isFavourite: Bool = false) {
         self.name = name
         self.serves = serves
@@ -24,19 +26,21 @@ class Recipe: Codable {
         self.isFavourite = isFavourite
     }
     
+    // a function to determine if the entire class actually has no data
     func isEmpty() -> Bool {
         
         return name?.isEmpty ?? true && serves == nil && description?.isEmpty ?? true && ingredients.isEmpty && method?.isEmpty ?? true
     }
 }
 
-
+// the ingredient class, many of these belong to one of the Recipes
 class Ingredient: Codable {
     var name: String?
     var quantity: Double?
     var uom: String?
     var quantityPerOneServe: Decimal?
 
+    // initialisation
     init(name: String? = nil, quantity: Double? = nil, uom: String? = nil, quantityPerOneServe: Decimal? = nil) {
         self.name = name
         self.quantity = quantity
@@ -44,10 +48,12 @@ class Ingredient: Codable {
         self.quantityPerOneServe = quantityPerOneServe
     }
     
+    // a function used as part of the quantity recalculation. if we know how much wty per 1 serve we can easily calculate for other serves
     func getQuantityOfOneForServes(_ serves: Decimal?) -> Decimal {
         return Decimal((quantity ?? 0)) / (serves ?? 1) // Avoid division by zero
     }
 
+    // this is A LOT of boilerplate that essentially is ONLY needed for the JSON exporting and importing of recipes
     enum CodingKeys: String, CodingKey {
         case name, quantity, uom, quantityPerOneServe
     }
@@ -73,6 +79,7 @@ class Ingredient: Codable {
     }
 }
 
+// The favourites class - this is an extrenuous class whose express purpose it is to demonstrate how a memory leak can be inadvertantly created and easily overlooked. this entire class could easily be replaced by a simple Boolean value on the Recipe class
 class Favourites: Codable {
     var favourites: [Recipe] = []
     
@@ -80,9 +87,11 @@ class Favourites: Codable {
     var onFavouriteUpdate: (() -> Void)?
     
     deinit {
+        // when this is printed we can see object is deinitialised appropriately and is not hanging around causing memory leaks. if you open a Recipe and then immediately close it without toggling its favourite status, you will see this printed
         debugPrint("Favourites deinitialized")
     }
 
+    // a function to add the recipe to the Recipies own Favourite recipes list
     func addToFavourites(_ recipe: Recipe) {
         recipe.isFavourite = true
         favourites.append(recipe)
@@ -90,7 +99,7 @@ class Favourites: Codable {
         // Retain Cycle: Closure strongly captures `self`
         onFavouriteUpdate = {
             debugPrint("\(recipe.name ?? "Untitled") was added to favorites!")
-            debugPrint("Total favorites: \(self.favourites.count)") // Strong reference to `self` if you comment out the this line and line 101 the deinit should happen
+            debugPrint("Total favorites: \(self.favourites.count)") // Strong reference to `self` if you comment out the this line and line 115 the deinit should happen
         }
         
         onFavouriteUpdate?()
@@ -98,18 +107,19 @@ class Favourites: Codable {
     
     func removeFromFavourites(_ recipe: Recipe) {
         recipe.isFavourite = false
-        favourites.removeAll(where: {$0.name == recipe.name}) //okay we realy need some unique identifiers here...
+        favourites.removeAll(where: {$0.name == recipe.name}) //okay we realy need some unique identifiers here... checking based on name is not ideal especially when there are no guard against repeated names
         
         // Retain Cycle: Closure strongly captures `self`
         onFavouriteUpdate = {
             debugPrint("\(recipe.name ?? "Untitled") was removed from favorites!")
-            debugPrint("Total favorites: \(self.favourites.count)") // Strong reference to `self` if you comment out the this line and line 88 the deinit should happen
+            debugPrint("Total favorites: \(self.favourites.count)") // Strong reference to `self` if you comment out the this line and line 102 the deinit should happen
         }
         
         onFavouriteUpdate?()
     }
     
 
+    // more boilerplate 
     init() {}
 
     // MARK: - Codable Conformance

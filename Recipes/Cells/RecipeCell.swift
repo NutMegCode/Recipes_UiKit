@@ -8,6 +8,7 @@
 import UIKit
 
 class RecipeCell: UITableViewCell {
+    // the Recipe cell presents only the recipes name and its favourite status
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var favouriteImage: UIImageView!

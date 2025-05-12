@@ -10,6 +10,15 @@ import Foundation
 
 class RecipeViewController: UIViewController {
     
+    // The recipe screen allows a user to view the detials of a recipe, change its favourite status, and change the number of serves they wish to see
+    // Current functionality should include the following features:
+    // ability to view all recipe details including name, description, method, serves and all ingredients qty, uom, and titles
+    // a button to toggle the recipes favourite status
+    // a textfield to modify the desired serves
+    // a button to recalculate all the ingredients quantities for the new desired serves
+    // a button to save the changes to the favourites status and the desired serves
+    
+    
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -36,6 +45,7 @@ class RecipeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // set up the display populating the UI with the selected recipes details
         recipe = recipeList[index ?? 0]
         
         titleLabel.text = recipe?.name ?? "-"
@@ -49,6 +59,7 @@ class RecipeViewController: UIViewController {
 
     }
     
+    // set up the table, registering the cells it will use
     let ingredientCellIdentifier = "IngredientCell"
 
     private func setupTable() {
@@ -60,6 +71,8 @@ class RecipeViewController: UIViewController {
         
     }
     
+
+    // a button to recalculate the ingredients quantites with the new desired serves, updating the UI to reflect the new quantities
     @IBAction func recalculateIngredientQuantities(_ sender: Any) {
         
         if let ingredientsList = recipe?.ingredients,
@@ -71,11 +84,14 @@ class RecipeViewController: UIViewController {
             for ingredient in ingredientsList {
                 if let quantityPerOneServe = ingredient?.quantityPerOneServe {
                     
+                    //this stuff should demonstrate the different precisions of each data type. becuase Swift uses the IEEE standard there can be some imprecision with certain numbers
+                    //to best demonstrate the imprecision create a recipe with 1 serve and an item with 0.1 quantity. then after saving recalculate with 0.2 serves.
+                    // you would expect the result to be 0.02000000000
                     let doubleResult = NSDecimalNumber(decimal: quantityPerOneServe).doubleValue * servesDouble
-                    debugPrint("Double result \(ingredient?.name ?? ""):\(String(format: "%.20f", doubleResult))")
+                    debugPrint("Double result   \(ingredient?.name ?? ""):\(String(format: "%.20f", doubleResult))")
                     
                     let floatResult = NSDecimalNumber(decimal: quantityPerOneServe).floatValue * floatServes
-                    debugPrint("Float result\(ingredient?.name ?? ""): \(String(format: "%.20f", floatResult))")
+                    debugPrint("Float result    \(ingredient?.name ?? ""): \(String(format: "%.20f", floatResult))")
                     
                     let formatter = NumberFormatter()
                     formatter.numberStyle = .decimal
@@ -84,12 +100,12 @@ class RecipeViewController: UIViewController {
                     
                     let decimalResult = quantityPerOneServe * decimalServes
                     if let formattedDecimal = formatter.string(from: decimalResult as NSDecimalNumber) {
-                        debugPrint("Decimal result\(ingredient?.name ?? ""): \(formattedDecimal)")
+                        debugPrint("Decimal result  \(ingredient?.name ?? ""): \(formattedDecimal)")
                     }
                     
                     debugPrint("==============================")
                     
-                    ingredient?.quantity = doubleResult
+                    ingredient?.quantity = doubleResult // acutally just use the Double result, its accurate enough for our purposes without costing much for storage
                     
                 }
             }
@@ -98,7 +114,7 @@ class RecipeViewController: UIViewController {
         ingredientsTable.reloadData()
     }
     
-    
+    // a button to toggle the recipes favourites status - this cuases a memory leak and hard reference whenever the .removeFromFavourites() and .addToFavourites() is called
     @IBAction func favouriteButtonPressed(_ sender: Any) {
         if let recipe = recipe {
             if recipe.isFavourite {
@@ -113,11 +129,12 @@ class RecipeViewController: UIViewController {
         
     }
     
-    
+    // a button to save changes to the recipes favourites status and desired serves and return to the dashboard
     @IBAction func saveButtonPressed(_ sender: Any) {
         
         //we want to actually apply the changes to the recipe and favourites files
         FavouritesStorage().saveFavorites(favourites)
+        
         recipe?.serves = getStringToDouble(servesField.text ?? "0") ?? 0
         RecipeStorage().saveRecipes(recipeList)
         
@@ -125,7 +142,7 @@ class RecipeViewController: UIViewController {
         
     }
     
-    
+    // a button to delete the recipe from the recipe list and favourites list if applicable
     @IBAction func deleteButtonPressed(_ sender: Any) {
         
         if let recipe = recipe {
@@ -144,7 +161,7 @@ class RecipeViewController: UIViewController {
             //then pop the VC back to dashboard
             guard let navigationController = navigationController else {
                 fatalError("Navigation controller not found")
-            }// I need to create a centralised controller. this is just painful
+            }
             
             navigationController.popViewController(animated: true)
 
@@ -154,12 +171,14 @@ class RecipeViewController: UIViewController {
     
 }
 
+// if we want to be fancy with the textfield, do it here
 extension RecipeViewController: UITextFieldDelegate {
     
     
     
 }
 
+// code for the Ingredients table
 extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {

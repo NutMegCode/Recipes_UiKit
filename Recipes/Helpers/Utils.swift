@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//Convert Double? to String
+// a function to convert an optional Double? type to a String.
 func getDoubleToString(_ myNum: Double?) -> String {
     
     guard let myNum = myNum else {
@@ -35,7 +35,7 @@ func getDoubleToString(_ myNum: Double?) -> String {
     return strNum
 }
 
-
+// a function to convert an optional String? type to a Double. If it is unable to perform the conversion an error is thrown and the global alert system is triggered showing an alert to the user informing them of the error
 func getStringToDouble(_ myStr: String?) -> Double? {
     
     guard let myStr = myStr?.trimmingCharacters(in: .whitespacesAndNewlines), !myStr.isEmpty else {
@@ -44,6 +44,7 @@ func getStringToDouble(_ myStr: String?) -> Double? {
     
     var myNum: Double?
     
+    //some error handling! this could aslo be handled through simple if then logic
     do {
         if let num = Double(myStr) {
             myNum = num
@@ -51,6 +52,7 @@ func getStringToDouble(_ myStr: String?) -> Double? {
             throw NSError(domain: "ConversionError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not convert \(myStr) to a number"])
         }
     } catch {
+        // an error is thrown! catch it no matter what type of error it is, and trigger the global aret system to display the error to the user
         ErrorHandler.shared.showError(message: error.localizedDescription)
         myNum = nil
     }
@@ -58,6 +60,7 @@ func getStringToDouble(_ myStr: String?) -> Double? {
     return myNum
 }
 
+// extends the functionality of the base libraries UIViewController class to include the ability to display an alert when an error occurs
 extension UIViewController {
     func showErrorAlert(message: String, title: String = "Error") {
         let alertController = UIAlertController(title: title,
@@ -69,6 +72,7 @@ extension UIViewController {
     }
 }
 
+// a protocol to drive control of the global error alert system
 protocol CellErrorDisplayDelegate: AnyObject {
     func showError(message: String, title: String)
 }

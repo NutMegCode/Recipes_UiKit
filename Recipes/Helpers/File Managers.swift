@@ -9,14 +9,17 @@
 import Foundation
 import UIKit
 
+// a class to handle the saving and loading of favourite recipes - notice we can acheive this with ONLY the Foundation and UIKit libraries!
 class FavouritesStorage {
     private let fileName = "MyRecipes_favorites.json"
 
+    // a function to save all of the favourites recipes to local storage
     func saveFavorites(_ favorites: Favourites?) {
         
         if let favorites = favorites {
             
             let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
+            // some error handling! handles JSON conversion errors
             do {
                 let data = try JSONEncoder().encode(favorites)
                 try data.write(to: fileURL)
@@ -28,6 +31,7 @@ class FavouritesStorage {
         }
     }
 
+    // a function to load all of the fvourite recipes from local storage
     func loadFavourites() -> Favourites {
         let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
         
@@ -37,6 +41,7 @@ class FavouritesStorage {
             return emptyFavorites
         }
         
+        // some error handling! handles JSON conversion errors
         do {
             let data = try Data(contentsOf: fileURL)
             return try JSONDecoder().decode(Favourites.self, from: data)
@@ -47,14 +52,18 @@ class FavouritesStorage {
         }
     }
 
+    // a helper function to access the locoal storage document directories
     private func getDocumentsDirectory() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
 }
 
+
+// a class to handle the saving and loading of recipes - notice we can acheive this with ONLY the FOundation and UIKit libraries!
 class RecipeStorage {
     private let fileName = "MyRecipes_recipes.json"
 
+    // a function to save all of the recipes to local storage
     func saveRecipes(_ recipes: [Recipe]) {
         let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
         do {
@@ -66,6 +75,7 @@ class RecipeStorage {
         }
     }
 
+    // a function to load all of the recipes from local storage
     func loadRecipes() -> [Recipe] {
         let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
         
@@ -85,11 +95,14 @@ class RecipeStorage {
         }
     }
 
+    // a helper function to access the locoal storage document directories
     private func getDocumentsDirectory() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
 }
 
+
+// a class to handle exporting recipes as a JSON file to a location of the users choice
 class RecipeExporter {
     
     func exportRecipes(_ recipes: [Recipe], from viewController: UIViewController) {
@@ -115,7 +128,7 @@ class RecipeExporter {
     }
 }
 
-
+// a class to handle importing a JSON file of Recipes from the users device
 class RecipeImporter: NSObject, UINavigationControllerDelegate {
     
     var onRecipesImported: (([Recipe]) -> Void)?
@@ -130,6 +143,7 @@ class RecipeImporter: NSObject, UINavigationControllerDelegate {
     }
 }
 
+// an extension to our own RecipeImporter to implement the devices inbuilt document picker
 extension RecipeImporter: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {

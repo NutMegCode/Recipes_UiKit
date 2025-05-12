@@ -8,7 +8,7 @@
 import UIKit
 
 class IngredientCell: UITableViewCell {
-    
+// the Ingredient cell, just displays the ingredients data
     
     @IBOutlet weak var qtyLabel: UILabel!
     @IBOutlet weak var uomLabel: UILabel!

@@ -8,6 +8,8 @@
 import UIKit
 
 class NewIngredientCell: UITableViewCell {
+    // the New Ingredient cell, holds textfields for the ingredients QTY, UOM, and title allowing user input for each field
+    // functionality to provide the data entered in the cells fileds if there is any
     
     @IBOutlet weak var qtyTextField: UITextField!
     @IBOutlet weak var uomTextField: UITextField!
